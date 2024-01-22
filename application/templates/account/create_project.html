@@ -1,0 +1,28 @@
+{% extends 'base.html' %}
+
+{% block header %}
+  <h1>{% block title %}New Project{% endblock %}</h1>
+  <a href="{{ url_for('account.index') }}">Back to Home</a>
+{% endblock %}
+
+{% block content %}
+    <form method="post">
+        <label for="name">Name:</label>
+        <input type="text" id="name" name="name" value="{{ request.form['name'] }}" required>
+        <br>
+
+        <label for="start_date">Start Date:</label>
+        <input type="date" id="start_date" name="start_date" value="{{ request.form['start_date'] }}">
+        <br>
+
+        <label for="end_date">End Date:</label>
+        <input type="date" id="end_date" name="end_date" value="{{ request.form['end_date'] }}">
+        <br>
+
+        <label for="details">Details:</label>
+        <textarea id="details" name="details" rows="4" cols="50">{{ request.form['details'] }}</textarea>
+        <br>
+
+        <input type="submit" value="Create">
+    </form>
+{% endblock %}

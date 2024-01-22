@@ -1,0 +1,61 @@
+{% extends 'base.html' %}
+
+{% block header %}
+    {% if g.user %}    
+        <a class="action" href="{{ url_for('account.create_expense') }}">New Expense</a>
+        <a class="action" href="{{ url_for('account.create_project') }}">New Project</a>
+        <a class="action" href="{{ url_for('account.create_investment') }}">New Investment</a>
+        <a class="action" href="{{ url_for('account.create_earning') }}">New Earning</a>
+    {% else %}
+        <h1>Welcome</h1>
+    {% endif %}
+{% endblock %}
+
+{% block content %}
+    {% if g.user %}
+        <h1>Summary</h1>
+        <h2>Balance</h2>
+        {% for item in balance %}
+            {% for k in item.keys() %}
+                {{ k }} : {{ item[k] }} <br>
+            {% endfor %}
+        {% endfor %}
+        <h2>Earnings</h2>
+        {% for item in earnings %}
+            {% for k in item.keys() %}
+                {{ k }} : {{ item[k] }} <br>
+            {% endfor %}
+        {% endfor %}
+        <h2>Expenses</h2>
+        {% for item in expenses %}
+            {% for k in item.keys() %}
+                {{ k }} : {{ item[k] }} <br>
+            {% endfor %}
+        {% endfor %}
+        <h2>Savings</h2>
+        {% for item in savings %}
+            {% for k in item.keys() %}
+                {{ k }} : {{ item[k] }} <br>
+            {% endfor %}
+        {% endfor %}
+        <h2>Projects</h2>
+        {% for item in projects %}
+            {% for k in item.keys() %}
+                {{ k }} : {{ item[k] }} <br>
+            {% endfor %}
+        {% endfor %}
+        <h2>Investments</h2>
+        {% for item in investments %}
+            {% for k in item.keys() %}
+                {{ k }} : {{ item[k] }} <br>
+            {% endfor %}
+        {% endfor %}
+        <h2>Saving Plans</h2>
+        {% for item in saving_plans %}
+            {% for k in item.keys() %}
+                {{ k }} : {{ item[k] }} <br>
+            {% endfor %}
+        {% endfor %}
+    {% endif %}
+{% endblock %}
+    

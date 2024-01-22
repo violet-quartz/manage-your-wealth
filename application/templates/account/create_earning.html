@@ -1,0 +1,64 @@
+{% extends 'base.html' %}
+
+{% block header %}
+    <h1>{% block title %}New Earning{% endblock %}</h1>
+    <a href="{{ url_for('account.index') }}">Back to Home</a>
+{% endblock %}
+
+{% block content %}
+    <form method="post">
+        <label for="earning_type">Type:</label>
+        <select id="earning_type" name="earning_type" value="{{ request.form['earning_type'] }}" required>
+            <option value="wages">Wages</option>
+            <option value="bonus">Bonus</option>
+            <option value="stock">Stock</option>
+            <option value="rent">Rent</option>
+            <option value="side_job">Side Job</option>
+            <option value="investment">Investment</option>
+        </select>
+        <br>
+
+        <label for="amount">Amount:</label>
+        <input type="number" id="amount" name="amount" step="0.01" value="{{ request.form['amount'] }}" required>
+        <br>
+
+        <label for="currency">Currency:</label>
+        <select id="currency" name="currency" value="{{ request.form['currency'] }}" required>
+            <option value="RMB">RMB</option>
+            <option value="USD">USD</option>
+            <option value="EUR">EUR</option>
+            <option value="GBP">GBP</option>
+            <option value="HKD">HKD</option>
+            <option value="JPY">JPY</option>
+        </select>
+        <br>
+
+        <label for="earning_date">Date:</label>
+        <input type="date" id="earning_date" name="earning_date" value="{{ request.form['earning_date'] }}" required>
+        <br>
+
+        <label for="start_date">Start Date:</label>
+        <input type="date" id="start_date" name="start_date" value="{{ request.form['start_date'] }}">
+        <br>
+
+        <label for="end_date">End Date:</label>
+        <input type="date" id="end_date" name="end_date" value="{{ request.form['end_date'] }}">
+        <br>
+
+        
+        <label for="details">Details:</label>
+        <textarea id="details" name="details" rows="4" cols="50">{{ request.form['details'] }}</textarea>
+        <br>
+
+        <label for="project">Related Project:</label>
+        <select id="project" name="project" value="{{ request.form['project'] }}" required>
+            {% for p in projects %}
+                <option value="{{ p['id'] }}">{{ p['name'] }}</option>
+            {% endfor %}
+        </select>
+        <a class="action" href="{{ url_for('account.create_project') }}">New Project</a>
+        <br>
+        
+        <input type="submit" value="Create">
+    </form>
+{% endblock %}
