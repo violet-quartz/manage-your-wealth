@@ -1,0 +1,31 @@
+{% extends 'base.html' %}
+
+{% block header %}
+    <h1>{% block title %}All Projects{% endblock %}</h1>
+    <a href="{{ url_for('account.index') }}">Back to Home</a>
+{% endblock %}
+
+{% block content %}
+<table>
+    <thead>
+        <tr>
+            <th>Name</th>
+            <th>Balance</th>
+            <th>Start Date</th>
+            <th>End Date</th>
+            <th>Description</th>
+        </tr>
+    </thead>
+    <tbody>
+        {% for item in projects %}
+        <tr>
+            <td><a href="{{ url_for('account.list_project', id=item['id']) }}">{{ item['name'] }}</a></td>
+            <td>{{ item['balance'] }} {{ item['unit'] }}</td>
+            <td>{{ item['start_date'] }}</td>
+            <td>{{ item['end_date'] }}</td>
+            <td>{{ item['details'] }}</td>                    
+        </tr>           
+        {% endfor %}        
+    </tbody>
+</table>
+{% endblock %}

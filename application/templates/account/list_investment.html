@@ -1,0 +1,70 @@
+{% extends 'base.html' %}
+
+{% block header %}
+    <h1>{% block title %}{{ investment['name'] }}{% endblock %}</h1>
+    <a href="{{ url_for('account.index') }}">Back to Home</a>
+{% endblock %}
+
+{% block content %}
+<h1>Investment Information</h1>
+<table>
+    <thead>
+        <tr>
+            <th>Type</th>
+            <th>Invest Date</th>
+            <th>Amount</th>
+            <th>Status</th>
+        </tr>
+    </thead>
+    <tbody>
+        <tr>
+            <td>{{ investment['type'] }}</td>
+            <td>{{ investment['invest_date'] }}</td>
+            <td>{{ investment['amount'] }} {{ investment['unit'] }}</td>
+            <td>{{ investment['status'] }}</td>
+        </tr>
+    </tbody>
+</table>
+<h1>Investment Track</h1>
+<table>
+    <thead>
+        <tr>
+            <th>Date</th>
+            <th>Amount</th>
+            <th>Gains</th>
+        </tr>
+    </thead>
+    <tbody>
+        {% for track in tracks %}
+        <tr>
+            <td>{{ track['date'] }}</td>
+            <td>{{ track['amount'] }} {{ track['unit'] }}</td>
+            <td>{{ track['amount'] - investment['amount'] }} {{ track['unit'] }}</td>
+        </tr>
+        {% endfor %}
+    </tbody>
+</table>
+<h1>New Investment Track</h1>
+<form method="post">
+    <label for="track_date">Date:</label>
+    <input type="date" id="track_date" name="track_date" value="{{ request.form['track'] }}" required>
+    <br>
+
+    <label for="amount">Amount:</label>
+    <input type="number" id="amount" name="amount" step="0.01" value="{{ request.form['amount'] }}" required>
+    <br>
+
+    <label for="currency">Currency:</label>
+    <select id="currency" name="currency" value="{{ request.form['currency'] }}" required>
+        <option value="RMB">RMB</option>
+        <option value="USD">USD</option>
+        <option value="EUR">EUR</option>
+        <option value="GBP">GBP</option>
+        <option value="HKD">HKD</option>
+        <option value="JPY">JPY</option>
+    </select>
+    <br>
+
+    <input type="submit" value="Add">
+</form>
+{% endblock %}

@@ -6,6 +6,7 @@
         <a class="action" href="{{ url_for('account.create_project') }}">New Project</a>
         <a class="action" href="{{ url_for('account.create_investment') }}">New Investment</a>
         <a class="action" href="{{ url_for('account.create_earning') }}">New Earning</a>
+        <a class="action" href="{{ url_for('account.create_budget') }}">New Budget</a>
     {% else %}
         <h1>Welcome</h1>
     {% endif %}
@@ -13,49 +14,57 @@
 
 {% block content %}
     {% if g.user %}
-        <h1>Summary</h1>
-        <h2>Balance</h2>
-        {% for item in balance %}
-            {% for k in item.keys() %}
-                {{ k }} : {{ item[k] }} <br>
-            {% endfor %}
+        <h1>Projects</h1>
+        <table>
+            <thead>
+                <tr>
+                    <th>Name</th>
+                    <th>Balance</th>
+                    <th>Description</th>
+                </tr>
+            </thead>
+            <tbody>
+                {% for item in projects %}
+                <tr>
+                    <td><a href="{{ url_for('account.list_project', id=item['id']) }}">{{ item['name'] }}</a></td>
+                    <td>{{ item['balance'] }} {{ item['unit'] }}</td>
+                    <td>{{ item['details'] }}</td>                    
+                </tr>           
+                {% endfor %}        
+            </tbody>
+        </table>
+        <a href="{{ url_for('account.list_projects') }}" style="display:inline-block;margin-top:0.5rem;">More Projects</a>
+
+        <h1>Savings</h1>
+        {% for s in savings %}
+        {{ s['amount'] }} {{ s['unit']}}
         {% endfor %}
-        <h2>Earnings</h2>
-        {% for item in earnings %}
-            {% for k in item.keys() %}
-                {{ k }} : {{ item[k] }} <br>
-            {% endfor %}
-        {% endfor %}
-        <h2>Expenses</h2>
-        {% for item in expenses %}
-            {% for k in item.keys() %}
-                {{ k }} : {{ item[k] }} <br>
-            {% endfor %}
-        {% endfor %}
-        <h2>Savings</h2>
-        {% for item in savings %}
-            {% for k in item.keys() %}
-                {{ k }} : {{ item[k] }} <br>
-            {% endfor %}
-        {% endfor %}
-        <h2>Projects</h2>
-        {% for item in projects %}
-            {% for k in item.keys() %}
-                {{ k }} : {{ item[k] }} <br>
-            {% endfor %}
-        {% endfor %}
-        <h2>Investments</h2>
-        {% for item in investments %}
-            {% for k in item.keys() %}
-                {{ k }} : {{ item[k] }} <br>
-            {% endfor %}
-        {% endfor %}
-        <h2>Saving Plans</h2>
-        {% for item in saving_plans %}
-            {% for k in item.keys() %}
-                {{ k }} : {{ item[k] }} <br>
-            {% endfor %}
-        {% endfor %}
+
+        <h1>Investments</h1>
+        <table>
+            <thead>
+                <tr>
+                    <th>Name</th>
+                    <th>Type</th>
+                    <th>Invest Date</th>
+                    <th>Initial Value</th>
+                    <th>Latest Track Value</th>
+                    <th>Details</th>
+                </tr>
+            </thead>
+            <tbody>
+                {% for item in investments %}
+                <tr>
+                    <td><a href="{{ url_for('account.list_investment', id=item['id']) }}">{{ item['name'] }}</a></td>
+                    <td>{{ item['type'] }}</td>
+                    <td>{{ item['invest_date'] }}</td>
+                    <td>{{ item['amount'] }} {{ item['unit'] }}</td>
+                    <td>{{ item['latest_amount'] }} {{ item['latest_unit'] }}</td>
+                    <td>{{ item['details'] }}</td>                    
+                </tr>           
+                {% endfor %}        
+            </tbody>
+        </table>
     {% endif %}
 {% endblock %}
     

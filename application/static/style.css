@@ -24,3 +24,6 @@ nav ul li a, nav ul li span, header .action { display: block; padding: 0.5rem; }
 .content textarea { min-height: 12em; resize: vertical; }
 input.danger { color: #cc2f2e; }
 input[type=submit] { align-self: start; min-width: 10em; }
+table { width: 100%; border-collapse: collapse; margin-top:20px; }
+th, td { border: 1px solid #377ba8; padding:8px; text-align: left; }
+th { background-color: #cae6f6;}
