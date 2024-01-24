@@ -50,7 +50,7 @@
                 <option value="{{ p['id'] }}">{{ p['name'] }}</option>
             {% endfor %}
         </select>
-        <a class="action" href="{{ url_for('account.create_project') }}">New Project</a>
+        <a class="action" href="{{ url_for('account.project.create') }}">New Project</a>
         <br>
         
         <input type="submit" value="Create">

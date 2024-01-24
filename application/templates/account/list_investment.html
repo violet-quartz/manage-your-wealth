@@ -54,15 +54,8 @@
     <input type="number" id="amount" name="amount" step="0.01" value="{{ request.form['amount'] }}" required>
     <br>
 
-    <label for="currency">Currency:</label>
-    <select id="currency" name="currency" value="{{ request.form['currency'] }}" required>
-        <option value="RMB">RMB</option>
-        <option value="USD">USD</option>
-        <option value="EUR">EUR</option>
-        <option value="GBP">GBP</option>
-        <option value="HKD">HKD</option>
-        <option value="JPY">JPY</option>
-    </select>
+    <label for="currency">Currency:</label> 
+    <input type="text" id="currency" name="currency" value="{{ investment['unit'] }}" readonly>
     <br>
 
     <input type="submit" value="Add">

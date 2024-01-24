@@ -1,7 +1,7 @@
 {% extends 'base.html' %}
 
 {% block header %}
-    <h1>{% block title %}New Budget{% endblock %}</h1>
+    <h1>{% block title %}Update Budget{% endblock %}</h1>
     <a href="{{ url_for('account.index') }}">Back to Home</a>
 {% endblock %}
 
@@ -30,6 +30,6 @@
         <textarea id="details" name="details" rows="4" cols="50">{{ request.form['details'] or budget['details'] }}</textarea>
         <br>
         
-        <input type="submit" value="Create">
+        <input type="submit" value="Update">
     </form>
 {% endblock %}
