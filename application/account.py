@@ -41,7 +41,7 @@ def index():
 
     # list ongoing investments
     investments = db.execute(
-        'SELECT id, name, type, invest_date, investment.amount, investment.unit, details, '
+        'SELECT id, name, type, invest_date, investment.amount, investment.unit, details, status, '
         'IFNULL(it.amount, "") AS latest_amount, '
         'IFNULL(it.unit, "") AS latest_unit FROM investment LEFT OUTER JOIN '
         '(SELECT investment_id, amount, unit, date FROM (SELECT *, ROW_NUMBER() OVER (PARTITION BY investment_id ORDER BY date DESC) AS rn '
