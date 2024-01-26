@@ -14,7 +14,7 @@
 
 {% block content %}
     {% if g.user %}
-        <h1>Projects</h1>
+        <h1>Ongoing Projects</h1>
         <table>
             <thead>
                 <tr>
@@ -37,8 +37,9 @@
 
         <h1>Savings</h1>
         {% for s in savings %}
-        {{ s['amount'] }} {{ s['unit']}}
+        {{ s['amount'] }} {{ s['unit']}}<br>
         {% endfor %}
+        <a href="{{ url_for('account.saving.list_all') }}" style="display:inline-block;margin-top:0.5rem;">See Saving Details</a>
 
         <h1>Investments</h1>
         <table>
@@ -60,7 +61,8 @@
                     <td>{{ item['invest_date'] }}</td>
                     <td>{{ item['amount'] }} {{ item['unit'] }}</td>
                     <td>{{ item['latest_amount'] }} {{ item['latest_unit'] }}</td>
-                    <td>{{ item['details'] }}</td>                    
+                    <td>{{ item['details'] }}</td> 
+                    <td>{{ item['status'] }}</td>                   
                 </tr>           
                 {% endfor %}        
             </tbody>

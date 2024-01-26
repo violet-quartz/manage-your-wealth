@@ -24,6 +24,13 @@
     </tbody>
 </table>
 
+{% if balances %}
+<h2>Balance (Expenses from saving account are not included.):</h2>
+{% for b in balances %}
+{{ b['balance'] }} {{ b['unit']}}<br>
+{% endfor %}
+{% endif %}
+
 {% if expense_summary %}
 <h1>Expense Summary</h1>
 <table>

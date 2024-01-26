@@ -30,12 +30,13 @@ def create_app(test_config=None):
     app.register_blueprint(auth.bp)
 
     from . import account
-    from . import project, expense, budget, investment, earning
+    from . import project, expense, budget, investment, earning, saving
     account.bp.register_blueprint(project.bp)
     account.bp.register_blueprint(expense.bp)
     account.bp.register_blueprint(budget.bp)
     account.bp.register_blueprint(investment.bp)
     account.bp.register_blueprint(earning.bp)
+    account.bp.register_blueprint(saving.bp)
     app.register_blueprint(account.bp)
     app.add_url_rule('/', endpoint='account.index')
     

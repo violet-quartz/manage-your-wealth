@@ -53,6 +53,7 @@ CREATE TABLE expense (
     amount REAL NOT NULL,
     unit TEXT NOT NULL DEFAULT 'RMB',
     details TEXT,
+    source TEXT,
     FOREIGN KEY (user_id) REFERENCES user (id),
     FOREIGN KEY (project_id) REFERENCES project (id)
 );
@@ -94,6 +95,7 @@ CREATE TABLE saving_account (
     amount REAL NOT NULL,
     unit TEXT NOT NULL DEFAULT 'RMB',
     details TEXT,
+    project_id INTEGER,
     FOREIGN KEY (user_id) REFERENCES user (id)
 );
 

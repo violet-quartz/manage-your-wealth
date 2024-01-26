@@ -26,3 +26,15 @@ def create():
         return redirect(url_for('account.index'))
 
     return render_template('account/create_saving.html')
+
+@bp.route('/list/all', methods=['GET','POST'])
+@login_required
+def list_all():
+    db = get_db()
+    savings = db.execute(
+        'SELECT s.date, s.amount, s.unit, s.details, s.project_id, p.name AS project_name FROM '
+        '(SELECT date, amount, unit, details, project_id FROM saving_account WHERE user_id=?) AS s '
+        'LEFT OUTER JOIN project AS p ON s.project_id = p.id',
+        (g.user['id'],)
+    ).fetchall()
+    return render_template('account/list_savings.html', savings=savings)

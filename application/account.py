@@ -23,7 +23,7 @@ def index():
         'IFNULL(IFNULL(i.unit, e.unit), "") AS unit FROM '
         '(SELECT id, name, details FROM project WHERE user_id = ? AND end_date >= ?) AS p '
         'LEFT OUTER JOIN '
-        '(SELECT project_id, SUM(amount) AS total_expense, unit FROM expense GROUP BY project_id, unit) AS e '
+        '(SELECT project_id, SUM(amount) AS total_expense, unit FROM expense WHERE source!="saving" GROUP BY project_id, unit) AS e '
         'ON e.project_id = p.id '
         'LEFT OUTER JOIN '
         '(SELECT project_id, SUM(amount) AS total_income, unit FROM income GROUP BY project_id, unit) AS i '
@@ -37,7 +37,7 @@ def index():
         'SELECT IFNULL(SUM(amount), 0) AS amount, IFNULL(unit, "") AS unit FROM saving_account WHERE user_id = ?',
         (g.user['id'],)
         ).fetchall()
-    # TODO: list saving details    
+  
 
     # list ongoing investments
     investments = db.execute(
@@ -46,7 +46,7 @@ def index():
         'IFNULL(it.unit, "") AS latest_unit FROM investment LEFT OUTER JOIN '
         '(SELECT investment_id, amount, unit, date FROM (SELECT *, ROW_NUMBER() OVER (PARTITION BY investment_id ORDER BY date DESC) AS rn '
         'FROM investment_track) AS temp WHERE rn = 1) AS it '
-        'ON investment.id = it.investment_id WHERE user_id = ? AND status = "ongoing" ',
+        'ON investment.id = it.investment_id WHERE user_id = ?',
         (g.user['id'],)
         ).fetchall()
     

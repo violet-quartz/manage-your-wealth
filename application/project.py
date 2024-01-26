@@ -42,9 +42,23 @@ def create():
 def list(id):
     db = get_db()
     project = db.execute(
-        'SELECT name, start_date, end_date, details FROM project WHERE id = ?',
-        (id,)
+        'SELECT name, start_date, end_date, details FROM project WHERE id=?',
+        (id, )
     ).fetchone()
+
+    balances = db.execute(
+        'SELECT p.id, IFNULL(total_income, 0) - IFNULL(total_expense, 0) AS balance, '
+        'IFNULL(IFNULL(i.unit, e.unit), "") AS unit FROM '
+        '(SELECT id, name, start_date, end_date, details FROM project WHERE id=?) AS p '
+        'LEFT OUTER JOIN '
+        '(SELECT project_id, SUM(amount) AS total_expense, unit FROM expense WHERE source!="saving" GROUP BY project_id, unit) AS e '
+        'ON e.project_id = p.id '
+        'LEFT OUTER JOIN '
+        '(SELECT project_id, SUM(amount) AS total_income, unit FROM income GROUP BY project_id, unit) AS i '
+        'ON i.project_id = p.id '
+        'WHERE e.unit = i.unit OR e.unit IS NULL OR i.unit IS NULL',        
+        (id, )
+    ).fetchall()
 
     if not project:
         abort(404, "Project doesn't exist.") 
@@ -75,10 +89,9 @@ def list(id):
         'FROM income WHERE project_id = ? GROUP BY type, unit',
         (id, )
     ).fetchall()
-
     
     return render_template('account/list_project.html',
-                           project=project,
+                           project=project, balances=balances,
                            expenses=expenses, expense_summary=expense_summary,
                            earnings=earnings, earning_summary=earning_summary)
 

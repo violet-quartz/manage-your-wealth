@@ -8,16 +8,13 @@ from application.db import get_db
 
 bp = Blueprint('investment', __name__, url_prefix="/investment")
 
-@bp.route('/create', methods=['GET', 'POST'], defaults={'source':None, 'id':None})
-@bp.route('/create/<source>/<id>', methods=['GET','POST'])
+@bp.route('/create', methods=['GET', 'POST'], defaults={'expense_id':None})
+@bp.route('/create/<expense_id>', methods=['GET','POST'])
 @login_required
-def create(source, id):
+def create(expense_id):
     source_item = None
-    if source and id:
-        if source == 'expense':        
-            source_item = get_expense(id)
-        elif source == 'saving':
-            source_item = get_saving(id)
+    if expense_id:
+        source_item = get_expense(expense_id)
 
     if request.method == 'POST':
         name = request.form['name']
